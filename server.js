@@ -155,7 +155,7 @@ app.get('/logo-carousel', (req, res) => {
           color: #6b7280;
           text-transform: uppercase;
           letter-spacing: 1.2px;
-          margin-bottom: 25px;
+          margin-bottom: 20px;
           font-weight: 600;
         }
         
@@ -191,10 +191,10 @@ app.get('/logo-carousel', (req, res) => {
         .logo-track {
           display: flex;
           align-items: center;
-          gap: 70px;
+          gap: 60px;
           animation: scroll 35s linear infinite;
           width: fit-content;
-          padding: 15px 0;
+          padding: 10px 0;
         }
         
         .logo-track:hover {
@@ -206,13 +206,14 @@ app.get('/logo-carousel', (req, res) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 150px;
-          height: 70px;
+          width: 120px;
+          height: 50px;
+          padding: 5px;
         }
         
         .logo-item img {
-          max-width: 150px;
-          max-height: 70px;
+          max-width: 100%;
+          max-height: 100%;
           width: auto;
           height: auto;
           filter: grayscale(100%);
@@ -224,7 +225,7 @@ app.get('/logo-carousel', (req, res) => {
         .logo-item:hover img {
           filter: grayscale(0%);
           opacity: 1;
-          transform: scale(1.1);
+          transform: scale(1.05);
         }
         
         @keyframes scroll {
@@ -239,15 +240,11 @@ app.get('/logo-carousel', (req, res) => {
         /* Mobile adjustments */
         @media (max-width: 640px) {
           .logo-track {
-            gap: 50px;
+            gap: 40px;
           }
           .logo-item {
-            width: 120px;
-            height: 55px;
-          }
-          .logo-item img {
-            max-width: 120px;
-            max-height: 55px;
+            width: 100px;
+            height: 40px;
           }
           .carousel-wrapper::before,
           .carousel-wrapper::after {
@@ -263,7 +260,7 @@ app.get('/logo-carousel', (req, res) => {
           <div class="logo-track">
             <!-- First set of 12 logos -->
             <div class="logo-item">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" style="background: white;" />
+              <img src="https://chapel-york.com/wp-content/uploads/2024/06/RandA-Foundation.png" alt="R&A" />
             </div>
             <div class="logo-item">
               <img src="https://blog.americangolf.co.uk/content/images/2023/09/AG-full-Length-2023.webp" alt="American Golf" />
@@ -301,7 +298,7 @@ app.get('/logo-carousel', (req, res) => {
             
             <!-- Duplicate set for continuous scrolling -->
             <div class="logo-item">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" style="background: white;" />
+              <img src="https://chapel-york.com/wp-content/uploads/2024/06/RandA-Foundation.png" alt="R&A" />
             </div>
             <div class="logo-item">
               <img src="https://blog.americangolf.co.uk/content/images/2023/09/AG-full-Length-2023.webp" alt="American Golf" />
