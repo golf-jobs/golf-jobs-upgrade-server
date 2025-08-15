@@ -140,13 +140,14 @@ app.get('/logo-carousel', (req, res) => {
         
         body {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-          background: transparent;
+          background: white;
           overflow: hidden;
         }
         
         .carousel-container {
           padding: 15px;
           text-align: center;
+          background: white;
         }
         
         .title {
@@ -162,6 +163,7 @@ app.get('/logo-carousel', (req, res) => {
           width: 100%;
           overflow: hidden;
           position: relative;
+          background: white;
         }
         
         /* Gradient masks for smooth edges */
@@ -189,10 +191,10 @@ app.get('/logo-carousel', (req, res) => {
         .logo-track {
           display: flex;
           align-items: center;
-          gap: 60px;
+          gap: 70px;
           animation: scroll 35s linear infinite;
           width: fit-content;
-          padding: 10px 0;
+          padding: 15px 0;
         }
         
         .logo-track:hover {
@@ -204,32 +206,25 @@ app.get('/logo-carousel', (req, res) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 140px;
-          height: 60px;
-          background: white;
-          border-radius: 8px;
-          padding: 10px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+          width: 150px;
+          height: 70px;
         }
         
         .logo-item img {
-          width: 100%;
-          height: 100%;
+          max-width: 150px;
+          max-height: 70px;
+          width: auto;
+          height: auto;
           filter: grayscale(100%);
           opacity: 0.7;
           transition: all 0.3s ease;
           object-fit: contain;
-          transform: scale(1.1); /* Makes logos slightly bigger */
-        }
-        
-        .logo-item:hover {
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .logo-item:hover img {
           filter: grayscale(0%);
           opacity: 1;
-          transform: scale(1.2); /* Slightly bigger on hover */
+          transform: scale(1.1);
         }
         
         @keyframes scroll {
@@ -244,12 +239,15 @@ app.get('/logo-carousel', (req, res) => {
         /* Mobile adjustments */
         @media (max-width: 640px) {
           .logo-track {
-            gap: 40px;
+            gap: 50px;
           }
           .logo-item {
-            width: 100px;
-            height: 45px;
-            padding: 8px;
+            width: 120px;
+            height: 55px;
+          }
+          .logo-item img {
+            max-width: 120px;
+            max-height: 55px;
           }
           .carousel-wrapper::before,
           .carousel-wrapper::after {
@@ -265,7 +263,7 @@ app.get('/logo-carousel', (req, res) => {
           <div class="logo-track">
             <!-- First set of 12 logos -->
             <div class="logo-item">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" />
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" style="background: white;" />
             </div>
             <div class="logo-item">
               <img src="https://blog.americangolf.co.uk/content/images/2023/09/AG-full-Length-2023.webp" alt="American Golf" />
@@ -303,7 +301,7 @@ app.get('/logo-carousel', (req, res) => {
             
             <!-- Duplicate set for continuous scrolling -->
             <div class="logo-item">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" />
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" style="background: white;" />
             </div>
             <div class="logo-item">
               <img src="https://blog.americangolf.co.uk/content/images/2023/09/AG-full-Length-2023.webp" alt="American Golf" />
