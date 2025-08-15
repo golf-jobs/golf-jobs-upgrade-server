@@ -119,3 +119,214 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Golf Jobs upsell server running on :${PORT}`);
 });
+
+// ADD THIS ROUTE TO YOUR EXISTING SERVER FILE
+app.get('/logo-carousel', (req, res) => {
+  res.setHeader('X-Frame-Options', 'ALLOWALL'); // Allow iframe embedding
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+          background: transparent;
+          overflow: hidden;
+        }
+        
+        .carousel-container {
+          padding: 15px;
+          text-align: center;
+        }
+        
+        .title {
+          font-size: 12px;
+          color: #6b7280;
+          text-transform: uppercase;
+          letter-spacing: 1.2px;
+          margin-bottom: 20px;
+          font-weight: 600;
+        }
+        
+        .carousel-wrapper {
+          width: 100%;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        /* Gradient masks for smooth edges */
+        .carousel-wrapper::before,
+        .carousel-wrapper::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 60px;
+          z-index: 2;
+          pointer-events: none;
+        }
+        
+        .carousel-wrapper::before {
+          left: 0;
+          background: linear-gradient(to right, white, transparent);
+        }
+        
+        .carousel-wrapper::after {
+          right: 0;
+          background: linear-gradient(to left, white, transparent);
+        }
+        
+        .logo-track {
+          display: flex;
+          align-items: center;
+          gap: 50px;
+          animation: scroll 30s linear infinite;
+          width: fit-content;
+        }
+        
+        .logo-track:hover {
+          animation-play-state: paused;
+        }
+        
+        .logo-item {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+        }
+        
+        .logo-item img {
+          max-height: 35px;
+          width: auto;
+          max-width: 120px;
+          filter: grayscale(100%);
+          opacity: 0.6;
+          transition: all 0.3s ease;
+          object-fit: contain;
+        }
+        
+        .logo-item:hover img {
+          filter: grayscale(0%);
+          opacity: 1;
+          transform: scale(1.1);
+        }
+        
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 640px) {
+          .logo-track {
+            gap: 35px;
+          }
+          .logo-item img {
+            max-height: 28px;
+            max-width: 90px;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="carousel-container">
+        <div class="title">Trusted by Leading Golf Employers</div>
+        <div class="carousel-wrapper">
+          <div class="logo-track">
+            <!-- First set of 12 logos -->
+            <div class="logo-item">
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" />
+            </div>
+            <div class="logo-item">
+              <img src="https://blog.americangolf.co.uk/content/images/2023/09/AG-full-Length-2023.webp" alt="American Golf" />
+            </div>
+            <div class="logo-item">
+              <img src="https://d1f00kj7ad54bu.cloudfront.net/Pictures/1024x536/2/5/4/26254_acushnetcompanylogo_146410.jpg" alt="Acushnet Company" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.scottsdalegolf.co.uk/img/logos/sg-main.svg" alt="Scottsdale Golf" />
+            </div>
+            <div class="logo-item">
+              <img src="https://upload.wikimedia.org/wikipedia/en/2/20/St_Andrews_Links.png" alt="St Andrews Links" />
+            </div>
+            <div class="logo-item">
+              <img src="https://images.squarespace-cdn.com/content/v1/63c7e373ff4f92106ce379ce/b0f5385d-7847-477f-9419-0e8b09376c68/Medium+Grey.png" alt="Trackman" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.tagmarshal.com/wp-content/uploads/2023/10/golf-cart-gps-oakmont.jpg" alt="Oakmont Country Club" />
+            </div>
+            <div class="logo-item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvzMx5T5m1rexhm__NOW22_3f_rAFA_h3-0A&s" alt="PXG" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.carnoustiegolflinks.com/wp-content/uploads/2019/07/Carnoustie-Golf-Links-Logo-e1563970809539.png" alt="Carnoustie Golf Links" />
+            </div>
+            <div class="logo-item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHVCxcpeqd407A1LvnGZKoQI0T6pYhvPIlJw&s" alt="PING" />
+            </div>
+            <div class="logo-item">
+              <img src="https://about.puma.com/sites/default/files/styles/dd_text_media/public/media/text-media/m-18-logo-2023.png?itok=mnFQa0cl" alt="Cobra Puma Golf" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.lpga.com/-/media/images/global/authors/lpgalogo24_470x486.jpg" alt="LPGA" />
+            </div>
+            
+            <!-- Duplicate set for continuous scrolling -->
+            <div class="logo-item">
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/The_R%26A_logo.png" alt="R&A" />
+            </div>
+            <div class="logo-item">
+              <img src="https://blog.americangolf.co.uk/content/images/2023/09/AG-full-Length-2023.webp" alt="American Golf" />
+            </div>
+            <div class="logo-item">
+              <img src="https://d1f00kj7ad54bu.cloudfront.net/Pictures/1024x536/2/5/4/26254_acushnetcompanylogo_146410.jpg" alt="Acushnet Company" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.scottsdalegolf.co.uk/img/logos/sg-main.svg" alt="Scottsdale Golf" />
+            </div>
+            <div class="logo-item">
+              <img src="https://upload.wikimedia.org/wikipedia/en/2/20/St_Andrews_Links.png" alt="St Andrews Links" />
+            </div>
+            <div class="logo-item">
+              <img src="https://images.squarespace-cdn.com/content/v1/63c7e373ff4f92106ce379ce/b0f5385d-7847-477f-9419-0e8b09376c68/Medium+Grey.png" alt="Trackman" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.tagmarshal.com/wp-content/uploads/2023/10/golf-cart-gps-oakmont.jpg" alt="Oakmont Country Club" />
+            </div>
+            <div class="logo-item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvzMx5T5m1rexhm__NOW22_3f_rAFA_h3-0A&s" alt="PXG" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.carnoustiegolflinks.com/wp-content/uploads/2019/07/Carnoustie-Golf-Links-Logo-e1563970809539.png" alt="Carnoustie Golf Links" />
+            </div>
+            <div class="logo-item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHVCxcpeqd407A1LvnGZKoQI0T6pYhvPIlJw&s" alt="PING" />
+            </div>
+            <div class="logo-item">
+              <img src="https://about.puma.com/sites/default/files/styles/dd_text_media/public/media/text-media/m-18-logo-2023.png?itok=mnFQa0cl" alt="Cobra Puma Golf" />
+            </div>
+            <div class="logo-item">
+              <img src="https://www.lpga.com/-/media/images/global/authors/lpgalogo24_470x486.jpg" alt="LPGA" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>
+  `);
+});
