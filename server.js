@@ -154,7 +154,7 @@ app.get('/logo-carousel', (req, res) => {
           color: #6b7280;
           text-transform: uppercase;
           letter-spacing: 1.2px;
-          margin-bottom: 20px;
+          margin-bottom: 25px;
           font-weight: 600;
         }
         
@@ -171,7 +171,7 @@ app.get('/logo-carousel', (req, res) => {
           position: absolute;
           top: 0;
           bottom: 0;
-          width: 60px;
+          width: 80px;
           z-index: 2;
           pointer-events: none;
         }
@@ -189,9 +189,10 @@ app.get('/logo-carousel', (req, res) => {
         .logo-track {
           display: flex;
           align-items: center;
-          gap: 50px;
-          animation: scroll 30s linear infinite;
+          gap: 60px;
+          animation: scroll 35s linear infinite;
           width: fit-content;
+          padding: 10px 0;
         }
         
         .logo-track:hover {
@@ -203,23 +204,32 @@ app.get('/logo-carousel', (req, res) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 40px;
+          width: 140px;
+          height: 60px;
+          background: white;
+          border-radius: 8px;
+          padding: 10px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
         .logo-item img {
-          max-height: 35px;
-          width: auto;
-          max-width: 120px;
+          width: 100%;
+          height: 100%;
           filter: grayscale(100%);
-          opacity: 0.6;
+          opacity: 0.7;
           transition: all 0.3s ease;
           object-fit: contain;
+          transform: scale(1.1); /* Makes logos slightly bigger */
+        }
+        
+        .logo-item:hover {
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .logo-item:hover img {
           filter: grayscale(0%);
           opacity: 1;
-          transform: scale(1.1);
+          transform: scale(1.2); /* Slightly bigger on hover */
         }
         
         @keyframes scroll {
@@ -234,11 +244,16 @@ app.get('/logo-carousel', (req, res) => {
         /* Mobile adjustments */
         @media (max-width: 640px) {
           .logo-track {
-            gap: 35px;
+            gap: 40px;
           }
-          .logo-item img {
-            max-height: 28px;
-            max-width: 90px;
+          .logo-item {
+            width: 100px;
+            height: 45px;
+            padding: 8px;
+          }
+          .carousel-wrapper::before,
+          .carousel-wrapper::after {
+            width: 40px;
           }
         }
       </style>
