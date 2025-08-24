@@ -78,7 +78,7 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Human-friendly diagnostics (don’t expose publicly if you’re worried)
+// Human-friendly diagnostics (don't expose publicly if you're worried)
 app.get("/diag", async (req, res) => {
   res.set("Cache-Control", "no-store");
   res.json({
@@ -111,16 +111,79 @@ app.get("/prices", async (req, res) => {
   res.json(results);
 });
 
+// ===== NEW CHECKOUT ENDPOINT =====
+app.get("/checkout", async (req, res) => {
+  try {
+    // Check if Stripe is configured
+    if (!stripe) {
+      return res.status(500).json({ error: "Server missing STRIPE_SECRET_KEY" });
+    }
+
+    const { pid, success, cancel } = req.query;
+    
+    if (!pid) {
+      return res.status(400).json({ error: "Missing price ID parameter" });
+    }
+    
+    // Parse price IDs (handle single or comma-separated)
+    const priceIds = pid.split(",").filter(Boolean);
+    
+    if (priceIds.length === 0) {
+      return res.status(400).json({ error: "No valid price IDs provided" });
+    }
+    
+    console.log("Creating checkout session for prices:", priceIds);
+    
+    // Create line items for Stripe Checkout
+    const lineItems = priceIds.map(priceId => ({
+      price: priceId,
+      quantity: 1,
+    }));
+    
+    // Create Stripe Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      mode: "payment",
+      success_url: success || "https://golf-jobs.com/upgrade?success=true",
+      cancel_url: cancel || "https://golf-jobs.com/upgrade",
+      allow_promotion_codes: true,  // Allow discount codes
+      billing_address_collection: "required",
+      metadata: {
+        source: "golf-jobs-upgrade"
+      }
+    });
+    
+    console.log("Checkout session created:", session.id);
+    
+    // Redirect to Stripe Checkout
+    res.redirect(303, session.url);
+    
+  } catch (error) {
+    console.error("Checkout error:", error);
+    
+    // More detailed error response
+    if (error.type === "StripeInvalidRequestError") {
+      res.status(400).json({ 
+        error: "Invalid request to Stripe",
+        message: error.message,
+        details: error.raw?.message
+      });
+    } else {
+      res.status(500).json({ 
+        error: "Failed to create checkout session",
+        message: error.message 
+      });
+    }
+  }
+});
+
 // Fallback for root (not used by your front-end)
 app.get("/", (req, res) => {
-  res.status(404).send("Use /prices or /health");
+  res.status(404).send("Use /prices, /checkout, or /health");
 });
 
-app.listen(PORT, () => {
-  console.log(`Golf Jobs upsell server running on :${PORT}`);
-});
-
-// ADD THIS ROUTE TO YOUR EXISTING SERVER FILE
+// Logo carousel endpoint (keeping your existing code)
 app.get('/logo-carousel', (req, res) => {
   res.setHeader('X-Frame-Options', 'ALLOWALL'); // Allow iframe embedding
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -339,4 +402,8 @@ app.get('/logo-carousel', (req, res) => {
     </body>
     </html>
   `);
+});
+
+app.listen(PORT, () => {
+  console.log(`Golf Jobs upsell server running on :${PORT}`);
 });
