@@ -192,7 +192,7 @@ app.get("/checkout", async (req, res) => {
   }
 });
 
-// ========== NEW CREDIT CHECKOUT ENDPOINT ==========
+// ========== FIXED CREDIT CHECKOUT ENDPOINT ==========
 app.post('/checkout/credit', async (req, res) => {
   try {
     const { email, jobId } = req.body;
@@ -240,17 +240,19 @@ app.post('/checkout/credit', async (req, res) => {
     // Calculate credit from previous purchases
     let totalCredit = 0;
     
-    // Get all paid sessions for this customer
+    // Get all sessions for this customer (without payment_status filter - IT DOESN'T EXIST)
     const sessions = await stripe.checkout.sessions.list({
       customer: customer.id,
-      payment_status: 'paid',
       limit: 100
     });
 
-    console.log(`Found ${sessions.data.length} paid sessions for customer`);
+    // Filter for paid sessions only
+    const paidSessions = sessions.data.filter(session => session.payment_status === 'paid');
 
-    // Check each session's line items
-    for (const session of sessions.data) {
+    console.log(`Found ${paidSessions.length} paid sessions for customer`);
+
+    // Check each paid session's line items
+    for (const session of paidSessions) {
       const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
         limit: 100
       });
@@ -283,7 +285,7 @@ app.post('/checkout/credit', async (req, res) => {
       console.log(`Customer already has full bundle value - skipping checkout`);
       return res.json({ 
         alreadyCovered: true,
-        message: 'You already have the Max Visibility Bundle!',
+        message: 'You already have the Max Visibility Upgrade!',
         redirectUrl: SUCCESS_URL 
       });
     }
