@@ -125,7 +125,7 @@ app.get("/prices", async (req, res) => {
   res.json(results);
 });
 
-// ===== EXISTING CHECKOUT ENDPOINT =====
+// ===== EXISTING CHECKOUT ENDPOINT - UPDATED WITH EMAIL TEMPLATE =====
 app.get("/checkout", async (req, res) => {
   try {
     // Check if Stripe is configured
@@ -154,12 +154,16 @@ app.get("/checkout", async (req, res) => {
       quantity: 1,
     }));
     
+    // ===== THE KEY CHANGE: Add email to success URL using Stripe template =====
+    const successUrl = success || "https://golf-jobs.com/upgrade?success=true";
+    const successUrlWithEmail = `${successUrl}${successUrl.includes('?') ? '&' : '?'}e={CUSTOMER_EMAIL}`;
+    
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: success || "https://golf-jobs.com/upgrade?success=true",
+      success_url: successUrlWithEmail,  // <-- UPDATED LINE
       cancel_url: cancel || "https://golf-jobs.com/upgrade",
       allow_promotion_codes: true,  // Allow discount codes
       billing_address_collection: "required",
